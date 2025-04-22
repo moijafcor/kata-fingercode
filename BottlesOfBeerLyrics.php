@@ -1,8 +1,8 @@
 <?php
 
-use InvalidArgumentException;
-
-
+/**
+ * @see https://www.99-bottles-of-beer.net/lyrics.html
+ */
 class BottlesOfBeerLyrics
 {
     const MAX_BOTTLES = 99;
@@ -11,7 +11,14 @@ class BottlesOfBeerLyrics
     private $start;
     private $end;
 
-    public function __construct($start, $end = self::MIN_BOTTLES)
+    /**
+     * You can set the start and end number of bottles, just for fun.
+     * The default is 99 to 0.
+     *
+     * @param integer $start
+     * @param integer $end
+     */
+    public function __construct(int $start, int $end = self::MIN_BOTTLES)
     {
         if ($start < self::MIN_BOTTLES || $start > self::MAX_BOTTLES) {
             throw new InvalidArgumentException("Start number must be between " . self::MIN_BOTTLES . " and " . self::MAX_BOTTLES);
@@ -25,20 +32,15 @@ class BottlesOfBeerLyrics
 
     public function title()
     {
-        return 'lyrics to "99 Bottles of beer on the wall"';
+        return 'Lyrics to "99 Bottles of beer on the wall"' . "\n\n";
     }
 
-    public function sing()
-    {
-        return $this->verses($this->start, $this->end);
-    }
-
-    public function verse($number)
+    private function verse($number)
     {
         return $this->verseWithNumber($number);
     }
 
-    public function verses($start, $end)
+    private function verses($start, $end)
     {
         $verses = [];
         for ($i = $start; $i >= $end; $i--) {
@@ -79,5 +81,10 @@ class BottlesOfBeerLyrics
     private function takeOneDown()
     {
         return 'Take one down and pass it around';
+    }
+
+    public function sing()
+    {
+        return $this->verses($this->start, $this->end);
     }
 }
