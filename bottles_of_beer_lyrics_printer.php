@@ -1,12 +1,17 @@
 <?php
 
+use InvalidArgumentException;
+
 
 class BottlesOfBeerLyrics
 {
     const MAX_BOTTLES = 99;
     const MIN_BOTTLES = 0;
 
-    public function sing($start, $end = self::MIN_BOTTLES)
+    private $start;
+    private $end;
+
+    public function __construct($start, $end = self::MIN_BOTTLES)
     {
         if ($start < self::MIN_BOTTLES || $start > self::MAX_BOTTLES) {
             throw new InvalidArgumentException("Start number must be between " . self::MIN_BOTTLES . " and " . self::MAX_BOTTLES);
@@ -14,8 +19,18 @@ class BottlesOfBeerLyrics
         if ($end < self::MIN_BOTTLES || $end > self::MAX_BOTTLES) {
             throw new InvalidArgumentException("End number must be between " . self::MIN_BOTTLES . " and " . self::MAX_BOTTLES);
         }
+        $this->start = $start;
+        $this->end = $end;
+    }
 
-        return $this->verses($start, $end);
+    public function title()
+    {
+        return 'lyrics to "99 Bottles of beer on the wall"';
+    }
+
+    public function sing()
+    {
+        return $this->verses($this->start, $this->end);
     }
 
     public function verse($number)
@@ -37,11 +52,11 @@ class BottlesOfBeerLyrics
         return sprintf(
             "%s %s on the wall, %s %s.\n%s %s.\n",
             $this->bottles($number),
-            $this->onTheWall(),
+            $this->ofBeer(),
             $this->bottles($number),
             $this->takeOneDown(),
             $this->bottles($number - 1),
-            $this->onTheWall()
+            $this->ofBeer()
         );
     }
 
@@ -56,7 +71,7 @@ class BottlesOfBeerLyrics
         }
     }
 
-    private function onTheWall()
+    private function ofBeer()
     {
         return 'of beer';
     }
