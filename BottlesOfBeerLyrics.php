@@ -165,4 +165,37 @@ class BottlesOfBeerLyrics
     {
         return $this->verses();
     }
+
+    /**
+     * Simulates a typewriter effect when printing the song.
+     *
+     * @param string $text
+     * @param int $speed Base delay in microseconds between characters (default: 50_000 = 0.05s)
+     * @return void
+     */
+    public function typewriter(string $text, int $speed = 50000): void
+    {
+        foreach (str_split($text) as $char) {
+            echo $char;
+            usleep($this->delayForCharacter($char, $speed));
+        }
+    }
+
+    /**
+     * Calculates delay based on character.
+     * Adds more pause for periods, commas, newlines, etc.
+     *
+     * @param string $char
+     * @param int $base
+     * @return int
+     */
+    private function delayForCharacter(string $char, int $base): int
+    {
+        return match ($char) {
+            '.', '!', '?' => $base * 12,
+            ',', ';', ':' => $base * 6,
+            "\n" => $base * 8,
+            default => $base,
+        };
+    }
 }
