@@ -170,15 +170,35 @@ class BottlesOfBeerLyrics
      * Simulates a typewriter effect when printing the song.
      *
      * @param string $text
-     * @param int $speed Base delay in microseconds between characters (default: 50_000 = 0.05s)
+     * @param string $theme Speed profile: 'slow', 'normal', or 'fast'
      * @return void
      */
-    public function typewriter(string $text, int $speed = 50000): void
+    public function typewriter(string $text, string $theme = 'normal'): void
     {
+        $speed = $this->resolveThemeSpeed($theme);
+
         foreach (str_split($text) as $char) {
             echo $char;
             usleep($this->delayForCharacter($char, $speed));
         }
+    }
+
+    /**
+     * Resolves theme name into base microsecond delay.
+     * 
+     * Options: 'slow' 0.1 sec, 'normal' 0.05 sec, 'fast' 0.015 sec
+     *
+     * @param string $theme
+     * @return int
+     */
+    private function resolveThemeSpeed(string $theme): int
+    {
+        return match (strtolower($theme)) {
+            'slow' => 100000,     // 0.1 sec
+            'normal' => 50000,    // 0.05 sec
+            'fast' => 15000,      // 0.015 sec
+            default => 50000,     // fallback to normal
+        };
     }
 
     /**
