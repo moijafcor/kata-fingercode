@@ -5,18 +5,33 @@
  */
 class BottlesOfBeerLyrics
 {
+    /**
+     * The maximum number of bottles to honour the song's lyrics.
+     */
     const MAX_BOTTLES = 99;
-    const MIN_BOTTLES = 0;
-
-    private $start;
-    private $end;
 
     /**
-     * You can set the start and end number of bottles, just for fun.
+     * The minimum number of bottles to honour the song's lyrics.
+     */
+    const MIN_BOTTLES = 0;
+
+    /**
+     * The start number of bottles; no bigger than MAX_BOTTLES.
+     */
+    private int $start;
+
+    /**
+     * The end number of bottles; no smaller than MIN_BOTTLES.
+     */
+    private int $end;
+
+    /**
+     * You can set the start and end number of bottles, just for fun!
      * The default is 99 to 0.
      *
      * @param integer $start
      * @param integer $end
+     * @throws InvalidArgumentException
      */
     public function __construct(int $start, int $end = self::MIN_BOTTLES)
     {
@@ -30,16 +45,30 @@ class BottlesOfBeerLyrics
         $this->end = $end;
     }
 
-    public function title()
+    /**
+     * Title of the song.
+     *
+     * @return string
+     */
+    public function title(): string
     {
-        return 'Lyrics to "99 Bottles of beer on the wall"' . "\n\n";
+        if ($this->start === self::MAX_BOTTLES && $this->end === self::MIN_BOTTLES) {
+            return 'Lyrics to "99 Bottles of Beer on the Wall"' . "\n\n";
+        } else {
+            return "$this->start Bottles of Beer on the Wall" . "\n\n";
+        }
     }
 
-    private function verses()
+    /**
+     * Generates the lyrics for the song.
+     *
+     * @return string
+     */
+    private function verses(): string
     {
         $verses = [];
         for ($i = $this->start; $i >= $this->end; $i--) {
-            if ($i === 0) {
+            if ($i === $this->end) {
                 $verses[] = $this->verseOutOfBeer();
                 continue;
             }
@@ -90,7 +119,13 @@ class BottlesOfBeerLyrics
         );
     }
 
-    private function bottles($number)
+    /**
+     * Generates the string for the number of bottles.
+     *
+     * @param integer $number
+     * @return string
+     */
+    private function bottles($number): string
     {
         if ($number === 0) {
             return 'No more bottles';
@@ -101,17 +136,32 @@ class BottlesOfBeerLyrics
         }
     }
 
-    private function ofBeer()
+    /**
+     * Generates the string "of beer".
+     *
+     * @return string
+     */
+    private function ofBeer(): string
     {
         return 'of beer';
     }
 
-    private function takeOneDown()
+    /**
+     * Generates the string "Take one down and pass it around".
+     *
+     * @return string
+     */
+    private function takeOneDown(): string
     {
         return 'Take one down and pass it around';
     }
 
-    public function sing()
+    /**
+     * Prints out the song lyrics.
+     *
+     * @return string
+     */
+    public function sing(): string
     {
         return $this->verses();
     }
