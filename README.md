@@ -22,11 +22,17 @@ Just drop the class into your PHP project or run standalone from the CLI.
 #### Print Classic Behaviour
 
 ```bash
-php -f diva.php
+php -f lyrics_dumper.php
 ```
 
 #### Typewriter Theme
 
 ```bash
-php -f typewriter.php
+php -f lyrics_typewriter.php
+```
+
+#### Basic PHP
+
+```bash
+php -f basic_printer_lirycs_99_bottles_of_beer.php
 ```
