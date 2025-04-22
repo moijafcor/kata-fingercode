@@ -35,30 +35,58 @@ class BottlesOfBeerLyrics
         return 'Lyrics to "99 Bottles of beer on the wall"' . "\n\n";
     }
 
-    private function verse($number)
-    {
-        return $this->verseWithNumber($number);
-    }
-
-    private function verses($start, $end)
+    private function verses()
     {
         $verses = [];
-        for ($i = $start; $i >= $end; $i--) {
+        for ($i = $this->start; $i >= $this->end; $i--) {
+            if ($i === 0) {
+                $verses[] = $this->verseOutOfBeer();
+                continue;
+            }
             $verses[] = $this->verseWithNumber($i);
         }
         return implode("\n", $verses);
     }
 
-    private function verseWithNumber($number)
+    /**
+     * Generates the verse for a given number of bottles.
+     * 
+     * " 99 bottles of beer on the wall, 99 bottles of beer.
+     * " Take one down and pass it around, 98 bottles of beer on the wall.
+     * ...
+     * " No more bottles of beer on the wall, no more bottles of beer.
+     * " Go to the store and buy some more, 99 bottles of beer on the wall.
+     *
+     * @param integer $number
+     * @return string
+     */
+    private function verseWithNumber(int $number): string
     {
         return sprintf(
-            "%s %s on the wall, %s %s.\n%s %s.\n",
+            "%s %s on the wall, %s." . "\n" .  "%s %s %s.\n",
             $this->bottles($number),
             $this->ofBeer(),
             $this->bottles($number),
             $this->takeOneDown(),
             $this->bottles($number - 1),
             $this->ofBeer()
+        );
+    }
+
+    /**
+     * Generates the verse for the last bottle.
+     * 
+     * " No more bottles of beer on the wall, no more bottles of beer.
+     * " Go to the store and buy some more, 99 bottles of beer on the wall.
+     *
+     * @return string
+     */
+    private function verseOutOfBeer(): string
+    {
+        return sprintf(
+            "No more bottles of beer on the wall, no more bottles of beer." . "\n" .
+                "Go to the store and buy some more, %s bottles of beer on the wall.\n",
+            $this->start
         );
     }
 
@@ -85,6 +113,6 @@ class BottlesOfBeerLyrics
 
     public function sing()
     {
-        return $this->verses($this->start, $this->end);
+        return $this->verses();
     }
 }
