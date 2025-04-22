@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @requires >PHP 8.0
  * @see https://www.99-bottles-of-beer.net/lyrics.html
  */
 class BottlesOfBeerLyrics
