@@ -34,5 +34,5 @@ php -f lyrics_typewriter.php
 #### Basic PHP
 
 ```bash
-php -f basic_printer_lirycs_99_bottles_of_beer.php
+php -f basic_printer_lyrics_99_bottles_of_beer.php
 ```
