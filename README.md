@@ -1,6 +1,6 @@
-# Code Katas in PHP
+# SG - Code Review - Test #1 - PHP
 
-## 🍺 Bottles of Beer Lyrics in PHP
+## 🍺 Using PHP, Print out the lyrics to "99 Bottles of beer on the wall" 
 
 An extensible >PHP 8.0 class that prints the full lyrics to the classic song **"99 Bottles of Beer on the Wall"** — complete with an optional **typewriter-style animation** for extra nostalgia.
 
